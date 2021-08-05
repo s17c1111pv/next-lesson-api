@@ -4,7 +4,7 @@ services:
     nextjs-api:
         container_name: django-restapi
         env_file: ./backend/nextjs_restapi/.env
-        build: ./backend/nextjs_restapi/.
+        build: ./backend/.
         volumes:
             - ./backend/nextjs_restapi:/code/
             # - static_volume:/code/staticfiles # <-- bind the static volume
