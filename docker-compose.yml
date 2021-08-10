@@ -1,58 +1,64 @@
 version: "3.7"
 
 services:
-    nextjs-api:
-        container_name: django-restapi
-        env_file: ./backend/nextjs_restapi/.env
-        build: ./backend/.
-        volumes:
-            - ./backend/nextjs_restapi:/code/
-            # - static_volume:/code/staticfiles # <-- bind the static volume
-        stdin_open: true
-        tty: true
-        ports: 
-            - "8000:8000"
-        command: python manage.py runserver 0:8000
-        # command: gunicorn --bind :8000 config.wsgi:application
-#     networks:
-#       - backend_network
-#     environment:
-#       - CHOKIDAR_USEPOLLING=true
-#       - DJANGO_SETTINGS_MODULE=config.local_settings
-#     depends_on:
-#       - db
-#   backend-server:
-#     container_name: nginx_back
-#     build:
-#       context: ./backend/nginx/.
-#       dockerfile: Dockerfile.dev
-#     volumes:
-#       - static_volume:/code/staticfiles # <-- bind the static volume
-#     ports:
-#       - "8080:80"
-#     depends_on:
-#       - web-back
-#     networks:
-#       - backend_network
-#   db:
-#     build: ./mysql
-#     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-#     ports:
-#       - "3306:3306"
-#     environment:
-#       MYSQL_ROOT_PASSWORD: root
-#       MYSQL_DATABASE: todoList
-#       MYSQL_USER: user
-#       MYSQL_PASSWORD: password
-#       TZ: 'Asia/Tokyo'
-#     volumes:
-#       - ./mysql_volume:/var/lib/mysql
-#       - ./sql:/docker-entrypoint-initdb.d
-#     networks:
-#       - backend_network
+  # nextjs-api:
+  #   container_name: django-restapi
+  #   env_file: ./backend/nextjs_restapi/.env
+  #   build: ./backend/.
+  #   volumes:
+  #     - ./backend/nextjs_restapi:/code/
+  #   # - static_volume:/code/staticfiles # <-- bind the static volume
+  #   stdin_open: true
+  #   tty: true
+  #   ports:
+  #     - "8000:8000"
+  #   # command: gunicorn --bind :8000 rest_api.wsgi:application
+  #   command: python manage.py runserver 0.0.0.0:8000
+  # #   networks:
+  # #     - backend_network
 
+  # nginx-back:
+  #   container_name: nginx_next_lesson_api_back
+  #   build:
+  #     context: ./nginx/nginx_back/.
+  #     dockerfile: Dockerfile.dev
+  #   volumes:
+  #     - static_volume:/staticfiles # <-- bind the static volume
+  #   ports:
+  #     - "8080:80"
+  #   depends_on:
+  #     - nextjs-api
+  #   networks:
+  #     - backend_network
+
+  next-blog-todos:
+    build: ./frontend/.
+    volumes:
+      - ./frontend/nextjs_blog_todos:/usr/src/app
+    command: sh -c "npm run build && npm start"
+    # command: sh -c "npm run dev"
+    ports:
+      - "3000:3000"
+    # networks:
+    #   - frontend_network
+
+  # nginx-front:
+  #   container_name: nginx_next_lesson_api_front
+  #   build:
+  #     context: ./nginx/nginx_front/.
+  #     dockerfile: Dockerfile.dev
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - next-blog-todos
+  #   networks:
+  #     - frontend_network
 # networks:
+#   frontend_network:
+#     driver: bridge
 #   backend_network:
 #     driver: bridge
+
 # volumes:
 #   static_volume:
+# node_modules_volume:
