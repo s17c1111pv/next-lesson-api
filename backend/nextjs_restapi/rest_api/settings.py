@@ -27,7 +27,7 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG')
 
 # ALLOWED_HOSTS = ['nextjs-api-try.herokuapp.com',"localhost"]
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -68,6 +68,7 @@ CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000',
     'http://127.0.0.1:3000',
     'http://localhost',
+    'https://next-lesson-api.vercel.app',
 ]
 # レスポンスを公開する
 CORS_ALLOW_CREDENTIALS = True
